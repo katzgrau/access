@@ -41,6 +41,11 @@ class Access
 
         if(!array_key_exists($user, $logins) || $logins[$user] != $pass)
         {
+            $delay = config_item('access_delay');
+
+            # Is a delay configured for failed logins?
+            if($delay) sleep($delay);
+
             header('HTTP/1.0 401 Unauthorized');
             header('WWW-Authenticate: Basic realm="'.$realm.'"');
             die("<h1>Unauthorized</h1>\n");

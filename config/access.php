@@ -13,6 +13,10 @@ $config['access_logins'] = array (
     'putsup'    => 'abrick',
 );
 
+# Set an amount of time to hang before the login appears. Ie,
+#  make things a bit difficult to brute force
+$config['access_delay'] = 0;
+
 # The realm. Should be somethng like Your Site Name
 $config['access_realm'] = "Restricted Site";
 
@@ -24,8 +28,8 @@ $config['access_realm'] = "Restricted Site";
 #  is ignored.
 #
 # NOTE: Using this list will override anywhere you explicitly call
-#  $this->auth->prompt()
-$config['access_force_list']      = array();
+#  $this->access->prompt()
+$config['access_force_list'] = array();
 
 # Set to true if the list above SHOULD be prompted for a password. Set to
 # false if they should actually be EXcluded
