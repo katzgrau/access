@@ -41,12 +41,33 @@ Next, open up `sparks/access/x.x.x/config/access.php` and edit the login list:
 At this point, attempts to access your site should be met by a basic auth
 challenge. Give it a try.
 
-## Protect only part of a site
+## Protect only part of a site (manually)
 
 If you only want to protect a certain part of a site, like an admin section:
 
 1. Set `access_site_protection_enabled` to `false` in the config
 2. In the controller that you want to protect, call `$this->access->prompt();`
+
+## Protect part of a site, or sites, automatically
+
+Let's say you have a publicly visible staging site, like qa.getsparks.org.
+It's not the best idea to have it so public. Google crawls it, people find it,
+they get confused, etc.
+
+In the config, there's a setting named `access_force_list`. This is an array
+that contains a set of patterns. Any time the request URL matches one of these
+patterns, the prompt will be issued.
+
+So at GetSparks, we have:
+
+`$config['access_force_list']      = array('^qa.getsparks.org');`
+
+This will make sure any requests to our qa site get prompted. You can also use
+this as an exclusion this by setting another value.
+
+`$config['access_force_list_include'] = false; # Normally true`
+
+With that setting, every instance **except** for the QA site will be prompted.
 
 ## Maintainer
 
