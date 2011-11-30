@@ -1,4 +1,4 @@
-<?php if(class_exists('MY_Controller')) show_error ('The access spark uses a MY_Controller override, but you already have one implemented somewhere. You may need to hack this spark to make it work.');
+<?php
 
 /**
  * The class for the access spark
