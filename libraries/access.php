@@ -35,6 +35,18 @@ class Access
 
         $user = @$_SERVER['PHP_AUTH_USER'];
         $pass = @$_SERVER['PHP_AUTH_PW'];
+
+		// php fastcgi fix
+        // See http://www.besthostratings.com/articles/http-auth-php-cgi.html
+		//
+		// Place the line below in your .htaccess
+		// RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+		if (isset($_SERVER['FCGI_SERVER_VERSION']) && isset($_SERVER['HTTP_AUTHORIZATION']))
+		{
+			list($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) = explode(':' , base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)));
+			$user = $_SERVER['PHP_AUTH_USER'];
+			$pass = $_SERVER['PHP_AUTH_PW'];
+		}
         
         $logins = config_item('access_logins');
         $realm  = config_item('access_realm');
